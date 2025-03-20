@@ -1,7 +1,7 @@
 
 import asyncio
 
-from models import Students, Roles
+from db.models.models import Students, Roles
 from sqlalchemy import select, delete
 from sqlalchemy.ext.asyncio import create_async_engine, AsyncSession
 from sqlalchemy.orm import sessionmaker

@@ -9,11 +9,15 @@ class Base(DeclarativeBase):
     pass 
 
 
-class Students(Base):
-    __tablename__ = "Studentss"
+class User(Base):
+    __tablename__ = "users"
 
     id = Column(Integer, primary_key=True, index=True)
     login = Column(String(128), index=True)
+    first_name = Column(String(128), index=True, default="noname")
+    last_name = Column(String(128), index=True, default="noname")
+    email = Column(String(255), index=True, default="admin@admin.ru")
+
     password = Column(String(128), index=True)
 
     role =  Column(Integer, ForeignKey(
@@ -22,7 +26,8 @@ class Students(Base):
         )
     )
 
-    roles = relationship("Roles", back_populates="Studentss", lazy = "subquery")
+    roles = relationship("Roles", back_populates="users", lazy = "subquery")
+
 
     def __repr__(self):
         return f"{self.id} - {self.login} - {self.password} - {self.role}"
@@ -37,7 +42,7 @@ class Roles(Base):
     name = Column(String(128), index=True)
     level = Column(Integer, unique=True, index=True)
 
-    Studentss = relationship("Students", back_populates="roles", lazy = "subquery")
+    users = relationship("User", back_populates="roles", lazy = "subquery")
 
 
     def __repr__(self):
