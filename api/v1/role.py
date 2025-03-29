@@ -6,7 +6,6 @@ from db.roleservice import role_service
 from schemes.scheme import Role, ResponseRole
 from db.cacheservice import cache
 
-
 role_router = APIRouter()
 
 @role_router.post("/create_role/", status_code=HTTPStatus.ACCEPTED)
@@ -21,13 +20,13 @@ async def create_role(input: Role):
     response_model=ResponseRole
 )
 async def get_role(id: int):
-
     role = await cache.get(id)
     if role:
         print("взято из кеша")
         return json.loads(role)
     result = await role_service.get_role(int(id))
     to_cache = result.to_dict()
+
     await cache.add(id, json.dumps(to_cache), expire=30)
     return result
 
