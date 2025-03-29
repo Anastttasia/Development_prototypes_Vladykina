@@ -1,13 +1,10 @@
 from datetime import datetime, timedelta, UTC
 from http import HTTPStatus
-
 from fastapi import APIRouter, Response, HTTPException
-
 from schemes.scheme import AuthUser
 from services.tokenservice import create_token
 
 auth_router = APIRouter()
-
 
 @auth_router.post("/auth/", status_code=HTTPStatus.ACCEPTED)
 async def auth_user(input: AuthUser, resp: Response):
@@ -24,7 +21,6 @@ async def auth_user(input: AuthUser, resp: Response):
     # если пароль неверный то вернём HTTPException
 
     exp_time  = datetime.now(UTC) + timedelta(minutes=30)
-
     my_data ={
         "login": "maxim",
         "role": "admin",
